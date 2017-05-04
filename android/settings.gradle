@@ -1,0 +1,3 @@
+rootProject.name = 'ReactNativeN700R04'
+
+include ':app'
