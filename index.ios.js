@@ -17,7 +17,7 @@ export default class ReactNativeN700R04 extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          统一版本配置
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
