@@ -10,6 +10,7 @@ import {
 
 import  Icon from 'react-native-vector-icons/Ionicons'
 import Statetest from "./app/Statetest";
+import Statetest2 from "./app/Statetest2";
 
 export default class ReactNativeN700R04 extends Component {
   state = {
@@ -45,7 +46,7 @@ export default class ReactNativeN700R04 extends Component {
             }
           }
         >
-          <Statetest/>
+          <Statetest2/>
         </Icon.TabBarItem>
 
       </TabBarIOS>
