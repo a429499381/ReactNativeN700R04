@@ -11,27 +11,20 @@ import {
 import  Icon from 'react-native-vector-icons/Ionicons'
 
 export default class ReactNativeN700R04 extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      selectedTab: 'Home'
-    }
 
-  }
   render() {
     return (
       <TabBarIOS>
         <Icon.TabBarItem
-          title="Home"
+          title = 'Home'
           iconName="ios-home-outline"
           selectedIconName="ios-home"
-          selected = {this.state.selectedTab === 'Home'}
+          selected = {this.state.selectedTab === 'redTab'}
           onPress = {
             ()=> {
               this.setState({
-                selectedTab: 'Home',
+                selectedTab: 'redTab',
               })
-              Alert.alert('Home')
             }
           }
         >
@@ -41,17 +34,17 @@ export default class ReactNativeN700R04 extends Component {
           title="Home"
           iconName="ios-home-outline"
           selectedIconName="ios-home"
-          selected = {this.state.selectedTab === 'ios-Home'}
-          onPress = {
-            ()=> {
+          selected = {this.state.selectedTab === 'greenTab'}
+          onPress = {()=> {
               this.setState({
-                selectedTab: 'ios-home'
+                selectedTab: 'greenTab'
               })
             }
           }
         >
           <View ><Text>Home2</Text></View>
         </Icon.TabBarItem>
+
       </TabBarIOS>
     )
   }
