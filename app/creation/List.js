@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 
 
-export default class Edit extends Component {
+export default class List extends Component {
   render() {
-    return
+    return (
       <View>
-        <Text>制作页面</Text>
+        <Text>List制作页面</Text>
       </View>
-
+    )
   }
 
 }
