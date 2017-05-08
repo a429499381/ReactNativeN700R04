@@ -10,6 +10,33 @@ import {
 
 import  Icon from 'react-native-vector-icons/Ionicons'
 
+var Edit = React.createClass({
+  render() {
+    return (
+      <View>
+        <Text>制作页面</Text>
+      </View>
+    )
+  }
+})
+var List = React.createClass({
+  render() {
+    return (
+      <View>
+        <Text>页面</Text>
+      </View>
+    )
+  }
+})
+var Edit = React.createClass({
+  render() {
+    return (
+      <View>
+        <Text>制作页面</Text>
+      </View>
+    )
+  }
+})
 export default class ReactNativeN700R04 extends Component {
   state = {
     selectedTab: 'redTab'
@@ -21,30 +48,30 @@ export default class ReactNativeN700R04 extends Component {
           title = 'Home'  // 图标下的文字
           iconName="ios-home-outline"  // 没有选中的时候图标
           selectedIconName="ios-home" // 选中的是很好图标
-          selected = {this.state.selectedTab === 'redTab'} // 切换的方法
+          selected = {this.state.selectedTab === 'Edit'} // 切换的方法
           onPress = {
             ()=> {
               this.setState({
-                selectedTab: 'redTab',
+                selectedTab: 'Edit',
               })
             }
           }
         >
-          <View ><Text>Home Tab</Text></View>
+          <Edit></Edit>
         </Icon.TabBarItem>
         <Icon.TabBarItem
-          title="Home"
+          title="Home2"
           iconName="ios-home-outline"
           selectedIconName="ios-home"
-          selected = {this.state.selectedTab === 'greenTab'}
+          selected = {this.state.selectedTab === 'List'}
           onPress = {()=> {
               this.setState({
-                selectedTab: 'greenTab'
+                selectedTab: 'List'
               })
             }
           }
         >
-          <View ><Text>Home2</Text></View>
+          <List/>
         </Icon.TabBarItem>
 
       </TabBarIOS>
