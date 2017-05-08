@@ -9,34 +9,8 @@ import {
 } from 'react-native';
 
 import  Icon from 'react-native-vector-icons/Ionicons'
+import Statetest from "./app/Statetest";
 
-var Edit = React.createClass({
-  render() {
-    return (
-      <View>
-        <Text>制作页面</Text>
-      </View>
-    )
-  }
-})
-var List = React.createClass({
-  render() {
-    return (
-      <View>
-        <Text>页面</Text>
-      </View>
-    )
-  }
-})
-var Edit = React.createClass({
-  render() {
-    return (
-      <View>
-        <Text>制作页面</Text>
-      </View>
-    )
-  }
-})
 export default class ReactNativeN700R04 extends Component {
   state = {
     selectedTab: 'redTab'
@@ -57,7 +31,7 @@ export default class ReactNativeN700R04 extends Component {
             }
           }
         >
-          <Edit></Edit>
+          <Statetest/>
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Home2"
@@ -71,7 +45,7 @@ export default class ReactNativeN700R04 extends Component {
             }
           }
         >
-          <List/>
+          <Statetest/>
         </Icon.TabBarItem>
 
       </TabBarIOS>
