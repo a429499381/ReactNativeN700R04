@@ -11,21 +11,29 @@ import {
   Image,
 } from 'react-native';
 
+let data = ['apple','pear','banana','orange','apple','pear','banana',
+  'orange','apple','pear','banana','orange','apple','pear','banana','orange',
+  'apple','pear','banana','orange','apple','pear','banana','orange'];
 
 export default class List extends Component {
-  getInitialState() {
-  var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
-      dataSource: ds.cloneWithRows(['row1', 'row 2','row 3','row 4','row 5','row 6','row 7','row 8']),
-    }
-  }
+  constructor(){
+    super();
+    this.dataSource = new ListView.DataSource({
+      rowHasChanged:(row1,row2) => row1 !== row2
+    })
+  };
 
   render() {
-  return (
-    <ListView
-      dataSource={this.state.dataSource}
-      renderRow={(rowData) =><Text>{rowData}</Text>}
-    />
-  );
-}
+    return (
+      <View>
+        <ListView
+          dataSource={this.dataSource.cloneWithRows(data)}
+          renderRow={(rowData) =>
+            <View style={{flex:1,margin:10}}>
+              <Text style={{fontSize:25}}>{rowData}</Text>
+            </View>}
+        />
+      </View>
+    );
+  }
 }
