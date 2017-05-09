@@ -15,7 +15,7 @@ import Account from './app/account/Account'
 
 export default class ReactNativeN700R04 extends Component {
   state = {
-    selectedTab: 'List'
+    selectedTab: 'Account'
   }
   render() {
     return (
@@ -24,30 +24,30 @@ export default class ReactNativeN700R04 extends Component {
           title = 'Home'  // 图标下的文字
           iconName='ios-videocam-outline'  // 没有选中的时候图标
           selectedIconName= 'ios-videocam' // 选中的是很好图标
-          selected = {this.state.selectedTab === 'List'} // 切换的方法
+          selected = {this.state.selectedTab === 'Edit'} // 切换的方法
           onPress = {
             ()=> {
               this.setState({
-                selectedTab: 'List',
+                selectedTab: 'Edit',
               })
             }
           }
         >
-          <List />
+          <Edit/>
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Home2"
           iconName="ios-recording-outline"
           selectedIconName="ios-recording"
-          selected = {this.state.selectedTab === 'Edit'}
+          selected = {this.state.selectedTab === 'List'}
           onPress = {()=> {
-              this.setState({
-                selectedTab: 'Edit'
-              })
-            }
+            this.setState({
+              selectedTab: 'List'
+            })
+          }
           }
         >
-          <Edit />
+          <List />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="更多"
