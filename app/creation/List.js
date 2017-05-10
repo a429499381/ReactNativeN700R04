@@ -13,7 +13,9 @@ import {
   View
 } from 'react-native';
 
+import Mock from 'mockjs'
 const REQUEST_URL = 'https://api.douban.com/v2/movie/top250';
+const data = {"success":true,"data|10":[{"_id":"@ID","thumb":"@IMG(1200x600,@color())","viedeo":"xutao","title":"\u6d4b\u8bd5\u5185\u5bb98ekr"}]}
 
 export default class MovieList extends Component {
   constructor(){
@@ -22,9 +24,13 @@ export default class MovieList extends Component {
       movies:new ListView.DataSource({
         rowHasChanged:(row1,row2) => row1 !== row2
       }),
-      loaded:false
+      loaded:true
     }
-    this.fetchData();
+    var data = Mock.mock(data)
+    console.log(data)
+    this.setState = {
+      movies: data,
+    }
   };
 
   fetchData(){
@@ -43,22 +49,9 @@ export default class MovieList extends Component {
   renderMovieList(movie){
     return(
       <View style={styles.item}>
-        <View style={styles.itemImage}>
-          <Image
-            style={styles.image}
-            source={{uri:movie.images.large}} />
-        </View>
-        <View style={styles.itemContent}>
           <Text style={styles.itemHeader}>
             {movie.title}
           </Text>
-          <Text style={styles.itemMeta}>
-            {movie.original_title} ({movie.year})
-          </Text>
-          <Text style={styles.redText}>
-            {movie.rating.average}
-          </Text>
-        </View>
       </View>
     );
   }
