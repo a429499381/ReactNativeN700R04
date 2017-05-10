@@ -10,7 +10,8 @@ import {
   ListView,
   Image,
   ActivityIndicator,
-  View
+  View,
+  AlertIOS,
 } from 'react-native';
 
 const REQUEST_URL = 'https://api.douban.com/v2/movie/top250';
@@ -63,6 +64,10 @@ export default class MovieList extends Component {
     );
   }
 
+  _onendReached() {
+      AlertIOS.alert('OnendReached')
+  }
+
   render() {
     if (!this.state.loaded) {
       return(
@@ -82,6 +87,9 @@ export default class MovieList extends Component {
           renderRow={
             this.renderMovieList.bind(this)
           }
+          onEndReached = {this._onendReached.bind(this)}  // 上滑刷新
+          onEndReachedThreshold={20}  // 上滑刷新阀值
+          showsVerticalScrollIndicator = {false} // 去掉滚动条
         />
       </View>
     );
