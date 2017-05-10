@@ -1,168 +1,127 @@
-/**
- * Created by xutao on 2017/5/8.
- */
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
-  StyleSheet,
-  Text,
+  AppRegistry,
   View,
+  Text,
   ListView,
-  TouchableHighlight,
   Image,
-} from 'react-native';
+  ActivityIndicator,
+  StyleSheet
+} from 'react-native'
+
+const REQUEST_URL = 'https://api.douban.com/v2/movie/top250';
 
 
-export default class List extends Component {
-  getInitialState() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-    return {
-      dataSource: ds.cloneWithRows([
-        {
-          "_id":"420000199307274815","thumb":"http://dummyimage.com/1200x600/524b67)","viedeo":"xutao"
-        }
-        ,
-        {
-          "_id":"130000200401272468","thumb":"http://dummyimage.com/1200x600/09e551)","viedeo":"xutao"
-        }
-        ,
-        {
-          "_id":"500000198011265288","thumb":"http://dummyimage.com/1200x600/10f546)","viedeo":"xutao"
-        }
-        ,
-        {
-          "_id":"710000197501103227","thumb":"http://dummyimage.com/1200x600/2f5446)","viedeo":"xutao"
-        }
-        ,
-        {
-          "_id":"370000199508142064","thumb":"http://dummyimage.com/1200x600/6d0f53)","viedeo":"xutao"
-        }
-      ])
+export default class List1 extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      movies: new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2
+      }),
+      loaden: false,
     }
+    this.fetchData()
   }
 
-  renderRow(row) {
-      return (
-        <TouchableHighlight>
-          <View style = {styles.item}>
-            <Text style = {styles.title}>{row._id}</Text>
-            <Image
-              source = {{uri: row.thumb}}
-              style = {styles.thumb}
-              />
-              <Icon
-                name = 'ios-play'
-                size = {28}
-                style = {styles.play}
-              />
-              <View sytle = {styles.itemFooter}>
-                <View style = {styles.handleBox}>
-                  <Icon
-                    name = 'ios-heart-outline'
-                    size = {28}
-                    style = {styles.up}
-                  />
-                  <Text style = {styles.handleText}>喜欢</Text>
-                </View>
-                <View style = {styles.handleBox}>
-                  <Icon
-                    name = 'ios-chatbubble-outline'
-                    size = {28}
-                    style = {styles.commentIcon}
-                  />
-                  <Text style = {styles.handleText}>评论</Text>
-                </View>
-              </View>
-          </View>
-        </TouchableHighlight>
+  fetchData() {
+    fetch(REQUEST_URL)
+      .then(res => res.json())
+      .then(responseData => {
+        console.log(responseData)
+        console.log(responseData)
+        this.setState({
+          movies:this.state.movies.cloneWithRows(responseData.subjects),
+          loaden: true
+        })
+      })
+      .done(
+        console.log("err")
       )
   }
 
+  renderMovieList(movie){
+    return(
+      <View style={styles.item}>
+          <Text style={styles.itemHeader}>
+            {movie.title}
+          </Text>
+      </View>
+    );
+  }
+
   render() {
-    return (
-      <View style = {styles.container}>
-        <View style = {styles.header}>
-          <Text style = {styles.headerTitle}>制作页面</Text>
-        </View>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow}
-          enableEmptySections= {true}
+    if (!this.state.loaden) {
+      <View>
+        <ActivityIndicator
+          size = {28}
+
         />
       </View>
+    }
+
+    return (
+      <View>
+        <ListView
+          dataSource={this.state.movies}
+          renderRow ={
+            this.renderMovieList.bind(this)
+          }
+        />
+            </View>
     )
   }
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5fcff'
+    backgroundColor: '#F5FCFF',
   },
-  header: {
-    paddingTop: 25,
-    paddingBottom: 12,
-    backgroundColor: '#ee735c'
+  item:{
+    flexDirection:'row',
+    borderBottomWidth:1,
+    borderColor:'rgba(100,53,201,0.1)',
+    paddingBottom:6,
+    paddingTop:6,
+    flex:1,
   },
-  headerTitle: {
-    color: '#fff',
-    fontSize: 16,
-    textAlign: 'center',
-    fontWeight: '600'
+  itemText:{
+    fontSize:16,
+    fontFamily:'Helvetica Neue',
+    fontWeight:'400',
+    color:'rgba(0,0,0,0.8)',
+    lineHeight:26,
   },
-    item: {
-    width: 100,
-    marginBottom: 10,
-    backgroundColor: '#fff'
+  image:{
+    height:138,
+    width:99,
+    margin:6,
   },
-    thumb: {
-    width: 100,
-    height: 100 * 0.5,
-    resizeMode: 'cover'
+  itemHeader:{
+    fontSize:18,
+    fontFamily:'Helvetica Neue',
+    fontWeight:'300',
+    color:'#6435c9',
+    marginBottom:6,
   },
-    title: {
-    padding: 10,
-    fontSize: 18,
-    color: '#333'
+  itemContent:{
+    flex:1,
+    marginLeft:13,
+    marginTop:6,
   },
-    itemFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#eee'
+  itemMeta:{
+    fontSize:16,
+    color:'rgba(0,0,0,0.6)',
+    marginBottom:6,
   },
-    handleBox: {
-    padding: 10,
-    flexDirection: 'row',
-    width: 100 /2 - 0.5,
-    justifyContent: 'center',
-    backgroundColor: '#fff'
+  redText:{
+    color:'#db2828',
+    fontSize:15,
   },
-    play: {
-    position: 'absolute',
-    bottom: 14,
-    right: 14,
-    width: 46,
-    height: 46,
-    paddingTop: 9,
-    paddingLeft: 18,
-    backgroundColor: 'transparent',
-    borderColor: '#fff',
-    borderWidth: 1,
-    borderRadius: 23,
-    color: '#ed7b66'
+  loading:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
   },
-    handleText: {
-    paddingLeft: 12,
-    fontSize: 18,
-    color: '#333'
-  },
-    up: {
-    fontSize: 22,
-    color: '#333'
-  },
-    CommentIcon: {
-    fontSize: 22,
-    color: '#333'
-  }
-
-
-})
+});
