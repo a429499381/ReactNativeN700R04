@@ -12,11 +12,13 @@ import {
   ActivityIndicator,
   View,
   AlertIOS,
+  RefreshControl,
 } from 'react-native';
 
 import Mock from 'mockjs'
 const REQUEST_URL = 'https://api.douban.com/v2/movie/top250';
-const data = {"success":true,"data|10":[{"_id":"@ID","thumb":"@IMG(1200x600,@color())","viedeo":"xutao","title":"\u6d4b\u8bd5\u5185\u5bb98ekr"}]}
+const Url = 'http://rapapi.org/mockjs/18652/api/creations?accessToken=abcd'
+
 
 export default class MovieList extends Component {
   constructor(){
@@ -25,14 +27,26 @@ export default class MovieList extends Component {
       movies:new ListView.DataSource({
         rowHasChanged:(row1,row2) => row1 !== row2
       }),
-      loaded:true
+      loaded:false,
+      isRefreshing: false,
     }
-    var data = Mock.mock(data)
-    console.log(data)
-    this.setState = {
-      movies: data,
-    }
+     this.fetchData()
+     this.fetchMock()
   };
+
+  fetchMock() {
+    fetch(Url)
+      .then(res => {
+        res.json()
+        console.log('Url' + res)
+      })
+      .then(resData => {
+        var MockData = Mock.mock(resData)
+        this.setState({
+          MockData: MockData,
+        })
+      })
+  }
 
   fetchData(){
     fetch(REQUEST_URL)
@@ -51,7 +65,7 @@ export default class MovieList extends Component {
     return(
       <View style={styles.item}>
           <Text style={styles.itemHeader}>
-            {movie.title}
+            {movie.title} {this.state.MockData}
           </Text>
       </View>
     );
@@ -59,6 +73,16 @@ export default class MovieList extends Component {
 
   _onendReached() {
       AlertIOS.alert('OnendReached')
+    this.setState({
+      isRefreshing: false,
+    })
+  }
+
+  _onRefresh() {
+    AlertIOS.alert('下拉刷新')
+    this.setState({
+      isRefreshing: false,
+    })
   }
 
   render() {
@@ -83,6 +107,14 @@ export default class MovieList extends Component {
           onEndReached = {this._onendReached.bind(this)}  // 上滑刷新
           onEndReachedThreshold={20}  // 上滑刷新阀值
           showsVerticalScrollIndicator = {false} // 去掉滚动条
+          refreshControl = {
+            <RefreshControl
+            refreshing = {this.state.isRefreshing}  // 下拉刷新状态
+            onRefresh = { this._onRefresh.bind(this)} // 下拉刷新 执行体
+            tintColor = '#ff0000'
+            title = '拼命刷新中...'
+            />
+          }
         />
       </View>
     );
